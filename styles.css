@@ -1,0 +1,68 @@
+.body {
+    background-color: azure;
+
+
+    .grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas:
+            "viz1 viz2"
+            "viz3 viz4";
+        align-items: start;
+        padding: 50px;
+        padding-bottom: 50px;
+        padding-bottom: 0px;
+        grid-column-gap: 250px;
+        grid-row-gap: 50px;
+        justify-items: center;
+    }
+
+    .gridLarge {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-areas:
+            "viz5"
+            "viz6";
+        gap: 25px;
+        align-items: start;
+        padding: 50px;
+        justify-items: center;
+    }
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+
+.visualization {
+    width: auto;
+    height: auto;
+}
+
+#vis1 {
+    grid-area: viz1;
+}
+
+#vis2 {
+    grid-area: viz2;
+}
+
+#vis3 {
+    grid-area: viz3;
+}
+
+#vis4 {
+    grid-area: viz4;
+}
+
+#vis5 {
+    grid-area: viz5;
+}
+
+#vis6 {
+    grid-area: viz6;
+}
