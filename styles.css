@@ -1,3 +1,7 @@
+a {
+    color:gray ;
+}
+
 .body {
     background-color: azure;
 
@@ -36,7 +40,9 @@
     align-items: center;
 }
 
-
+.navBar {
+    font-size: larger;
+}
 
 .visualization {
     width: auto;
@@ -65,4 +71,8 @@
 
 #vis6 {
     grid-area: viz6;
+}
+
+#viz7 {
+    grid-area: viz7;
 }

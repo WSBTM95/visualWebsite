@@ -112,8 +112,13 @@ const spec6 = {
     "x": { "field": "Year", "type": "nominal" },
     "color": { "field": "Primary Type", "type": "nominal" },
     "config": {
-      "axis": { "grid": true }
-    }
+      "axis": {"grid": true, "tickBand": "extent"}
+    },
+    'tooltip': [
+      {'field':'Year', 'type':'nominal'},
+      {'field':'Primary Type', "type":'ordinal'},
+      {'field':'count','type':"quantitative"}
+    ]
   }
 };
 vegaEmbed("#vis6", spec6);
