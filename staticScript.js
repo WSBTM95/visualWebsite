@@ -3,7 +3,7 @@ const spec1 = {
   description:
     "This is the first visualization, and it displays a pie graph with each slice representing the amount of crime via size.",
   data: {
-    url: "/viz1.json",
+    url: "viz1.json",
   },
   title: "Crime Per Year",
   mark: "arc",
