@@ -29,40 +29,96 @@ vegaEmbed("#vis7", spec7)
 
 const spec8 = {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-    "height":500,
-    "title": "Top Five Crimes of Each Ward",
-    "data": { "url": "viz8.json" },
-    "params": [
+    "data": {
+        "url": "viz8.json"
+    },
+
+    "vconcat": [
         {
-            "name": "pts",
-            "select": { "type": "point", "fields": ["Primary Type"], "toggle": false }
+            "title": "Top Five Crimes of Each Ward",
+            "params": [
+                {
+                    "name": "grid",
+                    "select": "interval",
+                    "bind": "scales"
+                },
+                {
+                    "name": "typePicker",
+                    "select": { "type": "point", "fields": ["Primary Type"] }
+
+                }
+            ],
+            "width": 1000,
+            "mark": "point",
+            "transform": [{ "filter": { "param": "pntBrush" } }],
+            "encoding": {
+                "x": {
+                    "field": "Ward",
+                    "type": "ordinal",
+                    "scale": { "domain": { "param": "pntBrush" } },
+                    "axis": { "title": "" }
+                },
+                "y": {
+                    "field": "count",
+                    "type": "quantitative"
+                },
+                "color": {
+                    "field": "Primary Type",
+                    "type": "nominal"
+                },
+                "shape": {
+                    "field": "Primary Type"
+                },
+                "size": {
+                    "condition": { "param": "pts", "value": 300 },
+                    "value": 0
+                },
+                "tooltip": [
+                    { "field": "count", "type": "quantitative" },
+                    {
+                        "field": "Primary Type",
+                        "type": "nominal"
+                    }
+                ]
+            }
+        },
+
+        {
+            "params": [
+                {
+                    "name": "pts",
+                    "select": { "type": "point", "fields": ["Primary Type"] }
+                },
+                {
+                    "name": "pntBrush",
+                    "select": { "type": "interval", "encodings": ["x"] }
+                }
+            ],
+            "mark": "point",
+            "encoding": {
+                "x": { "field": "Ward", "type": "ordinal" },
+                "y": { "field": "count", "type": "quantitative" },
+                "color": {
+                    "field": "Primary Type",
+                    "type": "nominal"
+                },
+                "shape": {
+                    "condition": {
+                        "param": "typePicker",
+                        "field": "Primary Type",
+                        "type": "nominal"
+                    },
+                    "value": "circle"
+                },
+                "size": {
+                    "condition": { "param": "typePicker", "value": 300 },
+                    "value": 0
+                }
+            }
         }
-    ],
-    "mark": "point",
-    "encoding": {
-        "x": { "field": "Ward", "type": "ordinal" },
-        "y": { "field": "count", "type": "quantitative" },
-        "color": {
-            "field": "Primary Type",
-            "type": "nominal"
-        },
-        "shape": {
-            "condition": {
-                "param": "pts",
-                "field": "Primary Type",
-                "type": "nominal"
-            },
-            "value": "circle"
-        },
-        "size": {
-            "condition": { "param": "pts", "value": 300 },
-            "value": 0
-        },
-        "tooltip": [
-            { "field": "count", "type": "quantitative" }
-        ]
-    }
-};
+    ]
+}
+    ;
 vegaEmbed("#vis8", spec8)
 
 const spec9 = {
@@ -97,12 +153,12 @@ const spec10 = {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
     "title": "HeatMap of Number of Reported Crimes Per Month in Chosen Year",
     "data": { "url": "viz10.json" },
-    "mark": "point",
+    "mark": "rect",
     "params": [
         {
             "name": "Filter_By_Type",
             "value": "ASSAULT",
-            "bind": { "input": "select", "options": ["ASSAULT", "CRIMINAL DAMAGE", "DECEPTIVE PRACTICE", "CRIMINAL SEXUAL ASSAULT", "THEFT", "OFFENSE INVOLVING CHILDREN", "ROBBERY", "SEX OFFENSE", "OTHER OFFENSE", "WEAPONS VIOLATION", "BATTERY", "STALKING", "MOTOR VEHICLE THEFT", "CRIMINAL TRESPASS", "HOMICIDE", "PROSTITUTION", "BURGLARY", "NARCOTICS", "KIDNAPPING", "ARSON", "CONCEALED CARRY LICENSE VIOLATION", "INTERFERENCE WITH PUBLIC OFFICER", "PUBLIC PEACE VIOLATION", "LIQUOR LAW VIOLATION", "INTIMIDATION", "GAMBLING", "OBSCENITY", "HUMAN TRAFFICKING", "OTHER NARCOTIC VIOLATION", "PUBLIC INDECENCY", "RITUALISM", "NON-CRIMINAL"] }
+            "bind": { "input": "select", "options": ["ARSON", "ASSAULT", "BATTERY", "BURGLARY", "CONCEALED CARRY LICENSE VIOLATION", "CRIMINAL DAMAGE", "CRIMINAL SEXUAL ASSAULT", "CRIMINAL TRESPASS", "DECEPTIVE PRACTICE", "GAMBLING", "HOMICIDE", "HUMAN TRAFFICKING", "INTERFERENCE WITH PUBLIC OFFICER", "INTIMIDATION", "KIDNAPPING", "LIQUOR LAW VIOLATION", "MOTOR VEHICLE THEFT", "NARCOTICS", "NON-CRIMINAL", "OBSCENITY", "OFFENSE INVOLVING CHILDREN", "OTHER NARCOTIC VIOLATION", "OTHER OFFENSE", "PROSTITUTION", "PUBLIC INDECENCY", "PUBLIC PEACE VIOLATION", "RITUALISM", "ROBBERY", "SEX OFFENSE", "STALKING", "THEFT", "WEAPONS VIOLATION"] }
         },
         {
             "name": "minYear",
@@ -127,7 +183,7 @@ const spec10 = {
             { "field": "count", "type": "quantitative" }
         ],
         "size": { "value": 100 },
-        "strokeWidth": {"value": 8}
-    },
+        "strokeWidth": { "value": 8 }
+    }
 };
 vegaEmbed("#vis10", spec10)
