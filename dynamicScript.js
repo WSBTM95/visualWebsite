@@ -268,7 +268,7 @@ const spec10 = {
 
             ],
             "mark": "rect",
-            "width": 800,
+            "width": 700,
             "heigth": 500,
             "params": [
                 {
@@ -290,7 +290,7 @@ const spec10 = {
                     "scale": { "scheme": "yelloworangered" },
                     "legend": {
                         "orient": "none",
-                        "legendX": 850,
+                        "legendX": 720,
                         "legendY": 100,
                         "tickCount": 5
                     }
@@ -315,7 +315,7 @@ const spec10 = {
             },
             "layer": [
                 {
-                    "width": 700,
+                    "width": 600,
                     "height": 500,
                     "title": {
                         "text": { "signal": "'Location of the ward '+wardPicker.Ward" }
@@ -349,5 +349,8 @@ const spec10 = {
             ]
         }
     ],
+    "config": {
+        "axis": { "grid": true, "tickBand": "extent" }
+    }
 };
 vegaEmbed("#vis10", spec10);
