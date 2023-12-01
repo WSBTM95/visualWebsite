@@ -2,7 +2,7 @@ const spec7 = {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
     "vconcat": [
         {
-            "title": "Crime Change Over the Years",
+            "title": "Domestic Crimes Over the Years",
             "width": 800,
             "data": { "url": "viz7.json" },
             "params": [
@@ -33,7 +33,7 @@ const spec7 = {
             "height": 300,
             "width": 750,
             "title": {
-                "text": { "signal": "'Type of Crime Breakdown For the Year of ' + barFilter.Year + ' For ' + barFilter.Domestic + ' Cases'" }
+                "text": { "signal": "'Crime Breakdown For the Year of ' + barFilter.Year + ' For ' + barFilter.Domestic + ' Cases'" }
             },
             "layer": [
                 {
@@ -182,11 +182,7 @@ const spec9 = {
                 "x": {
                     "field": "Year",
                     "type": "ordinal",
-                    "axis": { "grid": true },
-                    "scale": {
-                        "domainMin": 2001,
-                        "domainMax": 2023
-                    }
+                    "axis": { "grid": true }
                 },
                 "y": { "field": "count", "type": "quantitative" },
                 "size": {
@@ -213,7 +209,15 @@ const spec9 = {
                 { "filter": "datum.Year == Filter_By_Year" }
             ],
             "encoding": {
-                "y": { "field": "numMonth", "type": "ordinal", "axis": { "grid": true, "tickBand": "extent" } },
+                "y": {
+                    "field": "numMonth",
+                    "type": "ordinal",
+                    "axis": {
+                        "grid": true,
+                        "tickBand": "extent"
+                    },
+                    "title": "Month"
+                },
                 "x": { "field": "Primary Type", "type": "ordinal", "axis": { "grid": true, "tickBand": "extent" } },
                 "color": {
                     "aggregate": "sum",
@@ -221,7 +225,8 @@ const spec9 = {
                     "legend": {
                         "orient": "none",
                         "legendX": 900,
-                        "legendY": 300
+                        "legendY": 300,
+                        "tickCount": 5
                     }
                 },
                 "tooltip": [
@@ -237,9 +242,6 @@ vegaEmbed("#vis9", spec9);
 
 const spec10 = {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-    "title": "Heatmap of the Number of Reported Type of Crime Per Ward in A Range of Years",
-    "data": { "url": "viz10.json" },
-    "mark": "rect",
     "params": [
         {
             "name": "Filter_By_Type",
@@ -249,28 +251,104 @@ const spec10 = {
         {
             "name": "minYear",
             "value": 2001,
-            "bind": { "input": "range", "min": 2001, "max": 2023, "step": 1 }
+            "bind": { "input": "range", "min": 2001, "max": 2023, "step": 1 },
+
         },
         {
             "name": "maxYear",
             "value": 2023,
             "bind": { "input": "range", "min": 2001, "max": 2023, "step": 1 }
+        }
+    ],
+    "hconcat": [
+        {
+            "title": "Heatmap of the Number of Reported Type of Crime Per Ward in A Range of Years",
+            "data": { "url": "viz10.json" },
+            "params": [
+
+            ],
+            "mark": "rect",
+            "width": 700,
+            "heigth": 500,
+            "params": [
+                {
+                    "name": "wardPicker",
+                    "select": { "type": "point", "fields": ["Ward"] }
+                }
+            ],
+            "transform": [
+                { "filter": "datum['Primary Type'] == Filter_By_Type" },
+                { "filter": "minYear <= datum['Year'] & datum['Year'] <= maxYear" }
+            ],
+            "encoding": {
+                "y": { "field": "Year", "type": "ordinal" },
+                "x": { "field": "Ward", "type": "ordinal" },
+                "color": {
+                    "aggregate": "sum",
+                    "field": "count",
+                    "type": "quantitative",
+                    "scale": { "scheme": "yelloworangered" },
+                    "legend": {
+                        "orient": "none",
+                        "legendX": 720,
+                        "legendY": 100,
+                        "tickCount": 5
+                    }
+                },
+                "tooltip": [
+                    { "field": "count", "type": "quantitative" },
+                    { "field": "Ward", "type": "ordinal" },
+                    { "field": "Year", "type": "ordinal" }
+                ],
+                "size": { "value": 100 },
+                "strokeWidth": { "value": 8 }
+            },
         },
+
+        {
+            "data": {
+                "url": "chicago_2015_wards_topo.json",
+                "format": {
+                    "type": "topojson",
+                    "feature": "chicago_2015_wards"
+                }
+            },
+            "layer": [
+                {
+                    "width": 600,
+                    "height": 500,
+                    "title": {
+                        "text": { "signal": "'Location of the ward '+wardPicker.Ward" }
+                    },
+                    "mark": {
+                        "type": "geoshape",
+                        "stroke": "grey",
+                        "strokeWidth": 2
+                    },
+                    "encoding": {
+                        "color": {
+                            "value": "#39ff33"
+                        }
+                    }
+                },
+                {
+                    "mark": {
+                        "type": "geoshape",
+                        "stroke": "grey",
+                        "strokeWidth": 2
+                    },
+                    "transform": [
+                        { "filter": "datum.id == wardPicker.Ward" }
+                    ],
+                    "encoding": {
+                        "color": {
+                            "value": "red"
+                        }
+                    }
+                }
+            ]
+        }
     ],
-    "transform": [
-        { "filter": "datum['Primary Type'] == Filter_By_Type" },
-        { "filter": "minYear <= datum['Year'] & datum['Year'] <= maxYear" }
-    ],
-    "encoding": {
-        "y": { "field": "Year", "type": "ordinal" },
-        "x": { "field": "Ward", "type": "ordinal" },
-        "color": { "aggregate": "sum", "field": "count", "scale": { "scheme": "yelloworangered" } },
-        "tooltip": [
-            { "field": "count", "type": "quantitative" }
-        ],
-        "size": { "value": 100 },
-        "strokeWidth": { "value": 8 }
-    },
     "config": {
         "axis": { "grid": true, "tickBand": "extent" }
     }
