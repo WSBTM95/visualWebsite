@@ -1,31 +1,68 @@
 const spec7 = {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-    "title": "Crime Change Over the Years",
-    "data": { "url": "viz7.json" },
-    "params": [
-        { "name": "Show_Types_of_Domestic_Cases", "bind": { "input": "checkbox" } },
-    ],
-    "mark": "point",
-    "encoding": {
-        "x": { "field": "Year", "type": "ordinal" },
-        "y": { "field": "count", "type": "quantitative" },
-        "color": {
-            "condition": {
-                "param": "Show_Types_of_Domestic_Cases",
-                "field": "Domestic",
-                "type": "nominal"
-            },
-            "value": "gray"
+    "vconcat": [
+        {
+            "title": "Crime Change Over the Years",
+            "width": 800,
+            "data": { "url": "viz7.json" },
+            "params": [
+                {
+                    "name": "barFilter",
+                    "select": { "type": "point", "fields": ["Year", "Domestic"] }
+                }
+            ],
+            "mark": "point",
+            "encoding": {
+                "x": { "field": "Year", "type": "ordinal" },
+                "y": { "field": "count", "type": "quantitative" },
+                "color": {
+                    "field": "Domestic",
+                    "scale": { "range": ["#ba0909", "#239943"] }
+                },
+                "tooltip": [
+                    { "field": "count", "type": "quantitative" },
+                ],
+                "size": {
+                    "value": 100
+                }
+            }
         },
-        "tooltip": [
-            { "field": "count", "type": "quantative" },
-        ],
-        "size": {
-            "value": 100
+
+        {
+            "data": { "url": "viz7_2.json" },
+            "height": 300,
+            "width": 750,
+            "title": {
+                "text": { "signal": "'Type of Crime Breakdown For the Year of ' + barFilter.Year + ' For ' + barFilter.Domestic + ' Cases'" }
+            },
+            "layer": [
+                {
+                    "mark": "bar"
+                },
+                {
+                    "mark": {
+                        "type": "text",
+                        "align": "left",
+                        "baseline": "middle",
+                        "dx": 10,
+                        "dy": 2,
+                        // "stroke":"black"
+                    },
+                    "encoding": {
+                        "text": { "field": "count", "type": "quantitative" },
+                        "size": { "value": 0, "condition": { "param": "barFilter", "value": 10, "empty": false } }
+                    }
+                }
+            ],
+            "transform": [{ "filter": { "param": "barFilter" } }],
+            "encoding": {
+                "y": { "type": "nominal", "field": "Primary Type", "sort": "-x" },
+                "x": { "type": "quantitative", "field": "count" },
+            }
         }
-    }
+    ]
 };
-vegaEmbed("#vis7", spec7)
+vegaEmbed("#vis7", spec7);
 
 const spec8 = {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
@@ -117,41 +154,90 @@ const spec8 = {
             }
         }
     ]
-}
-    ;
-vegaEmbed("#vis8", spec8)
+};
+vegaEmbed("#vis8", spec8);
 
 const spec9 = {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-    "title": "HeatMap of Number of Reported Crimes Per Month in Chosen Year",
     "data": { "url": "viz9.json" },
-    "mark": "rect",
     "params": [
         {
             "name": "Filter_By_Year",
             "value": 2001,
             "bind": { "input": "range", "min": 2001, "max": 2023, "step": 1 }
+        }
+    ],
+    "vconcat": [
+
+        {
+            "title": {
+                "text": { "signal": "'The Changing Trend of ' + squarePicker['Primary Type'] + ' in the Month of '+ squarePicker.month + ' Across All Years'" }
+            },
+            "width": 800,
+            "transform": [
+                { "filter": { "param": "squarePicker" } }
+            ],
+            "mark": { "type": "area", "line": true, "point": true },
+            "encoding": {
+                "x": {
+                    "field": "Year",
+                    "type": "ordinal",
+                    "axis": { "grid": true },
+                    "scale": {
+                        "domainMin": 2001,
+                        "domainMax": 2023
+                    }
+                },
+                "y": { "field": "count", "type": "quantitative" },
+                "size": {
+                    "value": 0,
+                    "condition": { "param": "squarePicker", "empty": false }
+                },
+                "tooltip": [
+                    { "field": "count", "type": "quatitative" }
+                ]
+            }
         },
-    ],
-    "transform": [
-        { "filter": "datum.Year == Filter_By_Year" }
-    ],
-    "encoding": {
-        "y": { "field": "month", "type": "ordinal", "sort": null },
-        "x": { "field": "Primary Type", "type": "ordinal" },
-        "color": { "aggregate": "sum", "field": "count" },
-        "tooltip": [
-            { "field": "month", "type": "nominal" },
-            { "field": "Primary Type", "type": "ordinal" },
-            { "field": "count", "type": "quantitative" }
-        ]
-    }
-}
-vegaEmbed("#vis9", spec9)
+
+        {
+            "width": 800,
+            "title": "Heatmap of the Number of Reported Crimes Per Month in Chosen Year",
+            "mark": "rect",
+            "params": [
+                {
+                    "name": "squarePicker",
+                    "select": { "type": "point", "fields": ["month", "Primary Type"] }
+                }
+            ],
+            "transform": [
+                { "filter": "datum.Year == Filter_By_Year" }
+            ],
+            "encoding": {
+                "y": { "field": "numMonth", "type": "ordinal", "axis": { "grid": true, "tickBand": "extent" } },
+                "x": { "field": "Primary Type", "type": "ordinal", "axis": { "grid": true, "tickBand": "extent" } },
+                "color": {
+                    "aggregate": "sum",
+                    "field": "count",
+                    "legend": {
+                        "orient": "none",
+                        "legendX": 900,
+                        "legendY": 300
+                    }
+                },
+                "tooltip": [
+                    { "field": "month", "type": "ordinal" },
+                    { "field": "Primary Type", "type": "ordinal" },
+                    { "field": "count", "type": "quantitative" }
+                ]
+            }
+        }
+    ]
+};
+vegaEmbed("#vis9", spec9);
 
 const spec10 = {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-    "title": "HeatMap of Number of Reported Crimes Per Month in Chosen Year",
+    "title": "Heatmap of the Number of Reported Type of Crime Per Ward in A Range of Years",
     "data": { "url": "viz10.json" },
     "mark": "rect",
     "params": [
@@ -184,6 +270,9 @@ const spec10 = {
         ],
         "size": { "value": 100 },
         "strokeWidth": { "value": 8 }
+    },
+    "config": {
+        "axis": { "grid": true, "tickBand": "extent" }
     }
 };
-vegaEmbed("#vis10", spec10)
+vegaEmbed("#vis10", spec10);
