@@ -60,7 +60,7 @@ The visualization shows the total arrests made (per 10,000) per type of crime. M
 If you hover over the bars you can see the specific count of how many arrests were made. You can see that the highest amount of arrests is for narcotics and the lowest is for homicide. 
 
 
-![Alt text]("Crimes in Each Yard.png") 
+![Alt text]("Crimes in Each Ward.png") 
 This visualization shows the amount of crime (per thousand) in each ward. This is a preview to a spatial visual where you could see specifically where in Chicago the wards are located, so it would be easier to understand where the wards are located. This is to see if there is more crime occurring in certain wards which could be used to compare where the arrests are being made to know if the crimes are being dealt with accordingly.
 You can hover over the dots to see the specific amount of crime (per thousand) as well as the specific ward where the crime occurred.
 
@@ -74,7 +74,7 @@ You can hover over the bars to see the specific amount of crime per month.
 A further inspection of the Crimes per month in 2022 is shown here as besides the total amount of crime per month, the specific type of crime per month is shown for each month throughout the year of 2022.  You can see that the main types of crimes are theft and battery. A legend is on the side of the visualization showing the mean of the amount of crimes. By showing the mean, you can see a more accurate visual of which crimes are committed most. You can hover over the boxes to see the month, the specific type of crime as well as the count of that crime.
 
 
-![Alt text]("Change of Specific Crime Over the Years.png")
+![Alt text]("Change of Specific Crimes Over the Years.png")
 This visualization shows the linear change of crimes over time since the initial recording date of the data. Since there are so many types of crimes in the data, you see the top type of crime so the visualization is easier to comprehend. 
 Something important to note is that the visualization gives the illusion that there was no crime in 2001, but that is because that was the year that the data started to be recorded. It could be that the data was recorded later in the year which would explain why the visual makes it seem as if there was no crime during that year.
 This visual shows a more specific view of what the Crime per Year shows at the top of the page. This visualization further shows that there was more crime recorded in the early 2000s as mentioned before and there is a consistent decline in the crime that’s recorded, even if the data shows slight fluctuation. There is a notable change in 2020 that is most likely due to the lockdown. 
