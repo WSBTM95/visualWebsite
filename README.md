@@ -46,7 +46,10 @@ visualizations below. The interactions were made by searching for templates of h
 The captions of the screenshots will appear on the website 
 
 
+
 Statics Graphs 
+
+
 
 
 ![Alt text](Crime per Year.png)
@@ -55,7 +58,6 @@ The visualization shows the pattern of the amount of crimes per year since the i
 
 ![Alt text](Total Arrests per Crime.png)
 The visualization shows the total arrests made (per 10,000) per type of crime. More questions could arise from this visualization such as if there is a correlation between a type of crime and a number of arrests made. 
-
 If you hover over the bars you can see the specific count of how many arrests were made. You can see that the highest amount of arrests is for narcotics and the lowest is for homicide. 
 
 
@@ -77,6 +79,12 @@ A further inspection of the Crimes per month in 2022 is shown here as besides th
 This visualization shows the linear change of crimes over time since the initial recording date of the data. Since there are so many types of crimes in the data, you see the top type of crime so the visualization is easier to comprehend. 
 Something important to note is that the visualization gives the illusion that there was no crime in 2001, but that is because that was the year that the data started to be recorded. It could be that the data was recorded later in the year which would explain why the visual makes it seem as if there was no crime during that year.
 This visual shows a more specific view of what the Crime per Year shows at the top of the page. This visualization further shows that there was more crime recorded in the early 2000s as mentioned before and there is a consistent decline in the crime that’s recorded, even if the data shows slight fluctuation. There is a notable change in 2020 that is most likely due to the lockdown. 
+
+
+
+
+Dynamic Graphs
+
 
 
 ![Alt text](Domestic Crimes Over the Years and Crime Breakdown for the Year of undefined for undefined Cases.png)
